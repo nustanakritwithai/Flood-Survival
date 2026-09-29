@@ -286,7 +286,7 @@ export class FloodWorld {
   worldToScreen(position) {
     const out = new pc.Vec3();
     this.camera.camera.worldToScreen(new pc.Vec3(...position), out);
-    return { x: out.x, y: out.y, visible: out.z > 0 };
+    return { x: out.x, y: out.y, visible: true };
   }
 
   setInteractionEnabled(enabled) {
