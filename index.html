@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07131d" />
+  <meta name="description" content="Flood Survival — interactive isometric chronicle of the Prawet Buri Rom Canal flood." />
+  <title>Flood Survival — คลองประเวศบุรีรมย์</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "playcanvas": "https://cdn.jsdelivr.net/npm/playcanvas@2.22.6/build/playcanvas.mjs"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">REAL EVENT CHRONICLE · PLAYCANVAS</p>
+        <h1>คลองประเวศ Survival</h1>
+      </div>
+      <button id="helpButton" class="round-btn" aria-label="คำอธิบายประเภทข้อมูล">?</button>
+    </header>
+
+    <main>
+      <section class="status-grid" aria-label="สถานการณ์หลัก">
+        <article class="status-card status-main">
+          <span class="label">EVENT STATUS</span>
+          <strong>ACTIVE · RECOVERY PHASE</strong>
+          <small>เหตุการณ์จริง / Prototype วันที่ 29 ก.ย. 2569</small>
+        </article>
+        <article class="status-card">
+          <span class="label">ในบ้าน</span>
+          <strong>ประมาณเข่า</strong>
+          <small class="chip field">FIELD REPORT</small>
+        </article>
+        <article class="status-card">
+          <span class="label">รอบบ้าน</span>
+          <strong>บางจุดเอว–อก</strong>
+          <small class="chip field">FIELD REPORT</small>
+        </article>
+      </section>
+
+      <section class="scene-wrap">
+        <canvas id="application" aria-label="ฉาก PlayCanvas แบบไอโซเมติกจำลองเหตุการณ์น้ำท่วม"></canvas>
+        <div class="scene-card">
+          <span class="chip reconstructed">RECONSTRUCTED VIEW</span>
+          <strong id="sceneTitle">NOW · ชีวิตยังเดินต่อ</strong>
+          <small id="sceneSubtitle">ระดับน้ำในฉากเป็นภาพประกอบ ไม่ใช่ค่าจากสถานีวัด</small>
+        </div>
+        <div class="scene-controls">
+          <button id="zoomIn" aria-label="ขยายฉาก">＋</button>
+          <button id="zoomOut" aria-label="ย่อฉาก">−</button>
+          <button id="resetView" aria-label="คืนมุมกล้อง">⌂</button>
+        </div>
+        <div class="legend">
+          <span class="chip official">OFFICIAL</span>
+          <span class="chip reported">REPORTED</span>
+          <span class="chip field">FIELD</span>
+          <span class="chip estimate">ESTIMATE</span>
+          <span class="chip simulation">SIMULATION</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <span class="label">EVENT TIMELINE</span>
+            <h2>ย้อนดูเหตุการณ์</h2>
+          </div>
+          <span id="eventClass" class="chip field">FIELD REPORT</span>
+        </div>
+        <div id="timeline" class="timeline" role="list"></div>
+      </section>
+
+      <section class="panel event-panel">
+        <div class="event-meta">
+          <span id="eventTime"></span>
+          <span id="eventSource"></span>
+        </div>
+        <h2 id="eventTitle"></h2>
+        <p id="eventSummary"></p>
+        <div class="fact-grid">
+          <div><span>คลอง</span><strong id="canalState"></strong></div>
+          <div><span>ฝน</span><strong id="rainState"></strong></div>
+          <div><span>เป้าหมาย</span><strong id="playerGoal"></strong></div>
+        </div>
+        <a id="sourceLink" class="source-link" target="_blank" rel="noreferrer">เปิดแหล่งข้อมูล ↗</a>
+      </section>
+
+      <section class="panel mission-panel">
+        <div class="section-head">
+          <div>
+            <span class="label">TONIGHT</span>
+            <h2>ภารกิจคืนนี้</h2>
+          </div>
+          <span id="missionProgress">0/6</span>
+        </div>
+        <p class="support">คืนนี้อาจยังลำบาก แต่เราจัดชีวิตให้ปลอดภัยขึ้นได้ทีละเรื่อง</p>
+        <div id="missions" class="mission-list"></div>
+      </section>
+
+      <section class="two-col">
+        <article class="panel">
+          <span class="label">SYSTEM MAP</span>
+          <h2>ทำไมฝนซาแล้วน้ำยังค้าง?</h2>
+          <div class="flow">
+            <span>ฝนสะสมหนัก</span><b>↓</b>
+            <span>พื้นที่ฝั่งตะวันออกอิ่มน้ำ</span><b>↓</b>
+            <span>คลองย่อยทยอยเติมคลองหลัก</span><b>↓</b>
+            <span>คลองประเวศบุรีรมย์ยังสูง</span><b>↓</b>
+            <span>ต้องใช้เวลาระบายออก</span>
+          </div>
+          <p class="muted">นี่คือ conceptual model เพื่อการเรียนรู้ ไม่ใช่แบบจำลองชลศาสตร์หรือ forecast</p>
+        </article>
+
+        <article class="panel caution">
+          <span class="label">FACT CHECK</span>
+          <h2>เรื่อง “น้ำเหนือ”</h2>
+          <p><b>ห้ามเกมระบุว่า “น้ำเหนือกำลังเข้ามาทำให้คลองประเวศระบายช้า” เป็นข้อเท็จจริง</b> หากยังไม่มีข้อมูลทางการยืนยันความสัมพันธ์โดยตรง ณ เวลานั้น</p>
+          <p class="muted">ให้แสดงเป็น WATCH / ต้องตรวจสอบใหม่เมื่อสถานการณ์เปลี่ยน</p>
+        </article>
+      </section>
+
+      <section class="panel">
+        <span class="label">SAFETY CONTRACT</span>
+        <h2>เกมนี้ไม่มีภารกิจให้เสี่ยงชีวิต</h2>
+        <ul class="safety-list">
+          <li>ไม่ให้คะแนนจากการลุยน้ำหรือเข้าใกล้ไฟฟ้า</li>
+          <li>Simulation ต้องมีป้ายชัดเจนและห้ามใช้แทนคำเตือนภัย</li>
+          <li>ข้อมูลชุมชนต้องลดความละเอียดพิกัดเพื่อปกป้องบ้านผู้รายงาน</li>
+          <li>หากมีเหตุฉุกเฉิน ผู้ใช้ต้องยึดคำแนะนำของเจ้าหน้าที่ ไม่ใช่ภารกิจในเกม</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <span class="label">SOURCES & PROVENANCE</span>
+        <h2>แหล่งข้อมูลใน MVP</h2>
+        <div id="sources" class="sources"></div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>Flood Survival · PlayCanvas MVP</strong>
+      <span>เพื่อการเรียนรู้และบันทึกเหตุการณ์ ไม่ใช่ระบบเตือนภัยทางการ</span>
+    </footer>
+  </div>
+
+  <dialog id="helpDialog">
+    <button id="closeHelp" class="dialog-close" aria-label="ปิด">×</button>
+    <h2>อ่านข้อมูลอย่างไร</h2>
+    <p><b>OFFICIAL</b> — หน่วยงานทางการโดยตรง</p>
+    <p><b>REPORTED</b> — สื่อที่รายงานเหตุการณ์/คำแถลงพร้อมวันที่</p>
+    <p><b>FIELD REPORT</b> — ประสบการณ์ผู้ประสบเหตุในพื้นที่</p>
+    <p><b>ESTIMATE</b> — การประเมินที่อาจเปลี่ยนตามเงื่อนไข</p>
+    <p><b>SIMULATION / RECONSTRUCTED</b> — ใช้ช่วยมองภาพ ไม่ใช่ข้อมูลวัดหรือพยากรณ์</p>
+  </dialog>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
