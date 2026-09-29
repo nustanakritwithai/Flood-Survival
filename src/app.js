@@ -213,10 +213,7 @@ function updateHotspotPositions() {
 
 $("#zoomIn").addEventListener("click", () => world.setZoom(-0.6));
 $("#zoomOut").addEventListener("click", () => world.setZoom(0.6));
-$("#resetView").addEventListener("click", () => {
-  world.zoom = 7.1;
-  world.resetView();
-});
+$("#resetView").addEventListener("click", () => world.resetView(false));
 $("#helpButton").addEventListener("click", () => $("#helpDialog").showModal());
 $("#closeHelp").addEventListener("click", () => $("#helpDialog").close());
 $("#closeInteraction").addEventListener("click", closeInteraction);

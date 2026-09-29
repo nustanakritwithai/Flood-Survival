@@ -18,3 +18,229 @@ footer{display:flex;justify-content:space-between;gap:12px;padding:22px 3px 8px;
 @media(max-width:720px){.status-grid{grid-template-columns:1fr 1fr}.status-main{grid-column:1/-1}.scene-wrap{height:61vh;min-height:515px}.fact-grid,.two-col{grid-template-columns:1fr}footer{flex-direction:column}.scene-card{width:76%}.mission{grid-template-columns:25px 1fr}.mission-jump{grid-column:2;justify-self:start}.hotspot-button::after{display:none}}
 @media(max-width:390px){#app-shell{padding-left:9px;padding-right:9px}.scene-wrap{min-height:490px}.legend{max-width:94%}.interaction-panel{left:8px;bottom:8px;width:calc(100% - 16px)}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.hotspot-button{transition:none}}
+
+
+/* Mobile portrait view — keep the isometric home readable and the page scrollable. */
+@media (max-width: 720px) and (orientation: portrait) {
+  #app-shell {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .topbar {
+    padding-top: 4px;
+    padding-bottom: 10px;
+  }
+
+  .topbar .eyebrow {
+    font-size: .60rem;
+  }
+
+  h1 {
+    font-size: clamp(1.35rem, 7vw, 1.85rem);
+  }
+
+  .status-grid {
+    gap: 6px;
+    margin-bottom: 7px;
+  }
+
+  .status-card {
+    padding: 9px 10px;
+    border-radius: 13px;
+  }
+
+  .status-card strong {
+    font-size: .88rem;
+  }
+
+  .status-card small:not(.chip) {
+    font-size: .66rem;
+  }
+
+  .scene-wrap {
+    height: min(68svh, 620px);
+    min-height: 500px;
+    max-height: 620px;
+    border-radius: 18px;
+  }
+
+  #application {
+    touch-action: pan-y;
+  }
+
+  .scene-card {
+    left: 8px;
+    top: 8px;
+    width: calc(100% - 62px);
+    padding: 8px 9px;
+    border-radius: 11px;
+  }
+
+  .scene-card strong {
+    margin: 5px 0 2px;
+    font-size: .84rem;
+  }
+
+  .scene-card small {
+    font-size: .64rem;
+  }
+
+  .scene-card__top {
+    gap: 4px;
+  }
+
+  .play-badge,
+  .scene-card .chip {
+    padding: 3px 5px;
+    font-size: .52rem;
+  }
+
+  .scene-controls {
+    top: 92px;
+    right: 8px;
+    gap: 5px;
+  }
+
+  .scene-controls button {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    background: rgba(4, 17, 26, .88);
+  }
+
+  .hotspot-button {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 10px;
+    border-width: 2px;
+    box-shadow: 0 0 0 5px rgba(110, 218, 255, .08), 0 8px 24px rgba(0, 0, 0, .38);
+  }
+
+  .legend {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    max-width: none;
+    justify-content: flex-start;
+    gap: 3px;
+  }
+
+  .legend .chip {
+    padding: 3px 5px;
+    font-size: .50rem;
+    background: rgba(4, 17, 26, .72);
+  }
+
+  .interaction-panel {
+    left: 8px;
+    right: 8px;
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: auto;
+    max-height: 42%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 13px;
+    border-radius: 15px;
+  }
+
+  .interaction-panel h3 {
+    padding-right: 34px;
+    font-size: 1rem;
+  }
+
+  .interaction-panel p {
+    font-size: .80rem;
+  }
+
+  .interaction-safety {
+    margin: 8px 0;
+    padding: 7px 8px;
+    font-size: .67rem;
+  }
+
+  .primary-action {
+    min-height: 44px;
+  }
+
+  .history-notice {
+    margin-top: 7px;
+    padding: 9px 10px;
+    font-size: .72rem;
+  }
+
+  .panel {
+    margin-top: 7px;
+    padding: 12px;
+    border-radius: 15px;
+  }
+
+  .timeline {
+    gap: 6px;
+  }
+
+  .timeline button {
+    min-width: 92px;
+    padding: 9px;
+  }
+
+  .fact-grid {
+    gap: 5px;
+  }
+
+  .fact-grid div {
+    padding: 9px;
+  }
+
+  .mission {
+    padding: 9px;
+  }
+
+  .mission-jump {
+    min-height: 38px;
+    padding: 7px 10px;
+  }
+}
+
+@media (max-width: 390px) and (orientation: portrait) {
+  .scene-wrap {
+    height: 66svh;
+    min-height: 480px;
+  }
+
+  .scene-card {
+    width: calc(100% - 58px);
+  }
+
+  .scene-card small {
+    display: none;
+  }
+
+  .scene-controls {
+    top: 73px;
+  }
+
+  .legend .chip {
+    font-size: .46rem;
+  }
+
+  .hotspot-button {
+    min-width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-height: 680px) and (orientation: portrait) {
+  .scene-wrap {
+    height: 64svh;
+    min-height: 430px;
+  }
+
+  .scene-controls {
+    top: 76px;
+  }
+
+  .scene-card small {
+    display: none;
+  }
+}

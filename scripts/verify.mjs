@@ -20,7 +20,12 @@ const checks = [
   ["Gameplay only enables on NOW", app.includes('event.id === "now"')],
   ["No unsafe wading mission language", index.includes("ไม่มีภารกิจให้ลุยน้ำ")],
   ["Orthographic overlay avoids z-depth misuse", !world.includes("out.z > 0")],
-  ["Interaction HUD is present", index.includes('id="hotspotLayer"') && index.includes('id="interactionPanel"')]
+  ["Interaction HUD is present", index.includes('id="hotspotLayer"') && index.includes('id="interactionPanel"')],
+  ["Portrait camera profiles exist", world.includes('"portrait-narrow"') && world.includes('"portrait"')],
+  ["Responsive camera recenters on orientation change", world.includes("profile.mode !== this.viewMode")],
+  ["Reset uses current device profile", app.includes("resetView(false)")],
+  ["Portrait canvas permits vertical page scroll", readFileSync("styles.css", "utf8").includes("touch-action: pan-y")],
+  ["Mobile viewport uses svh", readFileSync("styles.css", "utf8").includes("68svh")]
 ];
 
 let failed = false;

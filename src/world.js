@@ -141,14 +141,56 @@ export class FloodWorld {
     this.app.root.addChild(street);
   }
 
-  resetView() {
-    this.camera.setPosition(7.4, 7.7, 8.9);
-    this.camera.lookAt(-0.15, 0.82, -0.05);
+  getViewProfile() {
+    const width = Math.max(1, this.canvas.clientWidth || window.innerWidth || 1);
+    const height = Math.max(1, this.canvas.clientHeight || window.innerHeight || 1);
+    const aspect = width / height;
+
+    if (aspect < 0.72) {
+      return {
+        mode: "portrait-narrow",
+        defaultZoom: 9.0,
+        minZoom: 7.2,
+        maxZoom: 11.4,
+        position: [7.0, 8.4, 9.7],
+        target: [-0.55, 0.92, -0.38]
+      };
+    }
+
+    if (aspect < 0.95) {
+      return {
+        mode: "portrait",
+        defaultZoom: 8.35,
+        minZoom: 6.6,
+        maxZoom: 10.7,
+        position: [7.1, 8.1, 9.3],
+        target: [-0.45, 0.88, -0.30]
+      };
+    }
+
+    return {
+      mode: "wide",
+      defaultZoom: 7.1,
+      minZoom: 4.8,
+      maxZoom: 10,
+      position: [7.4, 7.7, 8.9],
+      target: [-0.15, 0.82, -0.05]
+    };
+  }
+
+  resetView(preserveZoom = false) {
+    const profile = this.getViewProfile();
+    this.viewMode = profile.mode;
+    if (!preserveZoom) this.zoom = profile.defaultZoom;
+
+    this.camera.setPosition(...profile.position);
+    this.camera.lookAt(...profile.target);
     if (this.camera.camera) this.camera.camera.orthoHeight = this.zoom;
   }
 
   setZoom(delta) {
-    this.zoom = pc.math.clamp(this.zoom + delta, 4.8, 10);
+    const profile = this.getViewProfile();
+    this.zoom = pc.math.clamp(this.zoom + delta, profile.minZoom, profile.maxZoom);
     this.camera.camera.orthoHeight = this.zoom;
   }
 
@@ -397,5 +439,12 @@ export class FloodWorld {
     const w = Math.max(320, parent.clientWidth);
     const h = Math.max(420, parent.clientHeight);
     this.app.resizeCanvas(w, h);
+
+    const profile = this.getViewProfile();
+    if (profile.mode !== this.viewMode) {
+      this.resetView(false);
+    } else {
+      this.camera.camera.orthoHeight = this.zoom;
+    }
   }
 }
