@@ -1,7 +1,9 @@
 name: Verify
 on:
   push:
-    branches: [main, feature/isometric-flood-mvp]
+    branches:
+      - main
+      - "feature/**"
   pull_request:
     branches: [main]
 

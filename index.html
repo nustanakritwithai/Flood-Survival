@@ -46,16 +46,24 @@
 
       <section class="scene-wrap">
         <canvas id="application" aria-label="ฉาก PlayCanvas แบบไอโซเมติกจำลองเหตุการณ์น้ำท่วม"></canvas>
+
         <div class="scene-card">
-          <span class="chip reconstructed">RECONSTRUCTED VIEW</span>
+          <div class="scene-card__top">
+            <span class="chip reconstructed">RECONSTRUCTED VIEW</span>
+            <span id="playModeBadge" class="play-badge">SAFE PLAY MODE</span>
+          </div>
           <strong id="sceneTitle">NOW · ชีวิตยังเดินต่อ</strong>
           <small id="sceneSubtitle">ระดับน้ำในฉากเป็นภาพประกอบ ไม่ใช่ค่าจากสถานีวัด</small>
         </div>
+
+        <div id="hotspotLayer" class="hotspot-layer" aria-label="จุดทำภารกิจที่ปลอดภัย"></div>
+
         <div class="scene-controls">
           <button id="zoomIn" aria-label="ขยายฉาก">＋</button>
           <button id="zoomOut" aria-label="ย่อฉาก">−</button>
           <button id="resetView" aria-label="คืนมุมกล้อง">⌂</button>
         </div>
+
         <div class="legend">
           <span class="chip official">OFFICIAL</span>
           <span class="chip reported">REPORTED</span>
@@ -63,6 +71,20 @@
           <span class="chip estimate">ESTIMATE</span>
           <span class="chip simulation">SIMULATION</span>
         </div>
+
+        <aside id="interactionPanel" class="interaction-panel" hidden>
+          <button id="closeInteraction" class="interaction-close" aria-label="ปิด">×</button>
+          <span class="label">SAFE NODE</span>
+          <h3 id="interactionTitle"></h3>
+          <p id="interactionDetail"></p>
+          <div class="interaction-safety">ตัวละครเดินเฉพาะจุดที่เกมกำหนดว่าปลอดภัย ไม่มีภารกิจให้ลุยน้ำ</div>
+          <button id="completeInteraction" class="primary-action">ยืนยันว่าเตรียมแล้ว</button>
+        </aside>
+      </section>
+
+      <section id="historyNotice" class="history-notice" hidden>
+        <strong>โหมด Replay</strong>
+        <span>Timeline เก่าใช้เพื่อทำความเข้าใจเหตุการณ์ จุดภารกิจจะเปิดเฉพาะ NOW เพื่อไม่ให้ผู้เล่นตีความว่าต้องย้อนทำสิ่งเสี่ยงในสถานการณ์จริง</span>
       </section>
 
       <section class="panel">
@@ -99,7 +121,7 @@
           </div>
           <span id="missionProgress">0/6</span>
         </div>
-        <p class="support">คืนนี้อาจยังลำบาก แต่เราจัดชีวิตให้ปลอดภัยขึ้นได้ทีละเรื่อง</p>
+        <p class="support">แตะจุดในฉากเพื่อให้ตัวละครเดินไปยัง safe node แล้วตรวจสิ่งที่ต้องเตรียม คืนนี้อาจยังลำบาก แต่เราจัดชีวิตให้ปลอดภัยขึ้นได้ทีละเรื่อง</p>
         <div id="missions" class="mission-list"></div>
       </section>
 
@@ -130,6 +152,7 @@
         <h2>เกมนี้ไม่มีภารกิจให้เสี่ยงชีวิต</h2>
         <ul class="safety-list">
           <li>ไม่ให้คะแนนจากการลุยน้ำหรือเข้าใกล้ไฟฟ้า</li>
+          <li>ตัวละครเดินได้เฉพาะ safe nodes บนพื้นที่ยกสูงในโหมด NOW</li>
           <li>Simulation ต้องมีป้ายชัดเจนและห้ามใช้แทนคำเตือนภัย</li>
           <li>ข้อมูลชุมชนต้องลดความละเอียดพิกัดเพื่อปกป้องบ้านผู้รายงาน</li>
           <li>หากมีเหตุฉุกเฉิน ผู้ใช้ต้องยึดคำแนะนำของเจ้าหน้าที่ ไม่ใช่ภารกิจในเกม</li>
@@ -144,7 +167,7 @@
     </main>
 
     <footer>
-      <strong>Flood Survival · PlayCanvas MVP</strong>
+      <strong>Flood Survival · PlayCanvas v0.2</strong>
       <span>เพื่อการเรียนรู้และบันทึกเหตุการณ์ ไม่ใช่ระบบเตือนภัยทางการ</span>
     </footer>
   </div>

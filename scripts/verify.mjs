@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 
 const index = readFileSync("index.html", "utf8");
 const world = readFileSync("src/world.js", "utf8");
+const app = readFileSync("src/app.js", "utf8");
 const data = readFileSync("src/data.js", "utf8");
 
 const checks = [
@@ -13,7 +14,13 @@ const checks = [
   ["Simulation category exists", data.includes("SIMULATION")],
   ["Northern-water fact-check lock exists", index.includes("น้ำเหนือ") && index.includes("ห้ามเกมระบุ")],
   ["03:00 field event exists", data.includes("03:00") && data.includes("ครึ่งเตียง")],
-  ["Now field report exists", data.includes("ระดับเข่า") && data.includes("เอว–อก")]
+  ["Now field report exists", data.includes("ระดับเข่า") && data.includes("เอว–อก")],
+  ["Safe-node gameplay exists", world.includes("SAFE_NODES") && world.includes("moveHeroTo")],
+  ["Six safe mission nodes exist", ["electric","essentials","contact","route","log","trigger"].every(id => world.includes(`${id}:`))],
+  ["Gameplay only enables on NOW", app.includes('event.id === "now"')],
+  ["No unsafe wading mission language", index.includes("ไม่มีภารกิจให้ลุยน้ำ")],
+  ["Orthographic overlay avoids z-depth misuse", !world.includes("out.z > 0")],
+  ["Interaction HUD is present", index.includes('id="hotspotLayer"') && index.includes('id="interactionPanel"')]
 ];
 
 let failed = false;
